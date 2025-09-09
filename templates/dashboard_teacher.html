@@ -1,0 +1,97 @@
+<!-- templates/dashboard_teacher.html -->
+{% extends "base.html" %}
+
+{% block title %}Teacher Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>👩‍🏫 Hello, {{ current_user.name }}</h2>
+    <div>
+        <span class="badge bg-success fs-6">Role: Teacher</span>
+    </div>
+</div>
+
+<!-- Modules Section -->
+<h4>📘 Modules</h4>
+<div class="mb-4">
+    <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-sm mb-2">+ Add New Module</a>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for module in modules %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ module.title }}</h5>
+                    <p class="card-text">{{ module.description[:120] }}...</p>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-success btn-sm">Edit Module</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No modules added yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Quizzes Section -->
+<h4>📝 Quizzes</h4>
+<div class="mb-4">
+    <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-sm mb-2">+ Add New Quiz</a>
+    <table class="table table-striped align-middle">
+        <thead class="table-success">
+            <tr>
+                <th>Module</th>
+                <th>Question</th>
+                <th>Points</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for module in modules %}
+                {% for quiz in module.quizzes %}
+                <tr>
+                    <td>{{ module.title }}</td>
+                    <td>{{ quiz.question[:50] }}...</td>
+                    <td>{{ quiz.points }}</td>
+                    <td>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-sm btn-outline-success">Edit</a>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Challenges Section -->
+<h4>🌱 Challenges</h4>
+<div class="mb-4">
+    <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-sm mb-2">+ Add New Challenge</a>
+    <table class="table table-striped align-middle">
+        <thead class="table-success">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Points</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for challenge in challenges %}
+            <tr>
+                <td>{{ challenge.title }}</td>
+                <td>{{ challenge.description[:50] }}...</td>
+                <td>{{ challenge.points }}</td>
+                <td>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-sm btn-outline-success">Edit</a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4">No challenges added yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

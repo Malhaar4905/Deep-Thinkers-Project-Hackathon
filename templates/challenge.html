@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}{{ challenge.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title mb-3">{{ challenge.title }}</h4>
+            <p>{{ challenge.description }}</p>
+
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="proof_file" class="form-label">Upload Proof</label>
+                    <input class="form-control" type="file" id="proof_file" name="proof_file" required>
+                </div>
+                <button type="submit" class="btn btn-success mt-2">Submit Challenge</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

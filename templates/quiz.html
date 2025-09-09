@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz: {{ quiz.question[:30] }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Quiz: {{ quiz.question }}</h4>
+
+            <form method="POST">
+                {% for option in quiz.options | fromjson %}
+                <div class="form-check my-2">
+                    <input class="form-check-input" type="radio" name="answer" id="option{{ loop.index }}" value="{{ option }}" required>
+                    <label class="form-check-label" for="option{{ loop.index }}">
+                        {{ option }}
+                    </label>
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-success mt-3">Submit Answer</button>
+            </form>
+
+            {% if quiz.points %}
+            <p class="mt-3"><small>Points for correct answer: {{ quiz.points }}</small></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
